@@ -1,4 +1,4 @@
-import type Group from './user';
+import type Group from './User';
 export default class Date {
     _id: number;
     title: string;

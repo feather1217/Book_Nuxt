@@ -1,4 +1,4 @@
-import type Group from "./group";
+import type Group from "./Group";
 export default class TimeLine {
     _id: number;
   title: string;

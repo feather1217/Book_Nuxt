@@ -3,6 +3,7 @@
 </script>
 <template>
     <section>
-        <span></span>
+        <span>da</span>
+        <button class="btn btn-error">Error</button>
     </section>
 </template>

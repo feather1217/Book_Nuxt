@@ -1,7 +1,7 @@
-import type User from './user';
-import type Note from './note';
-import type TimeLine from './timeline';
-import type Date from './date';
+import type User from './User';
+import type Note from './Note';
+import type TimeLine from './Timeline';
+import type Date from './Date';
 
 
 export default class Group {

@@ -1,4 +1,4 @@
-import type Group from "./group";
+import type Group from "./Group";
 
 export default class Note {
     _id: number;
