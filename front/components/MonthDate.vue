@@ -65,6 +65,7 @@ function getSpanDays(event: Event) {
 function getEventOffsetInRow(date: dayjs.Dayjs) {
   return (date.day() + 6) % 7
 }
+
 // 事件條垂直堆疊計算
 const eventPositions = computed(() => {
   // key: yyyy-mm-dd，value: 此日已使用的事件堆疊索引陣列（事件 _id）
@@ -141,26 +142,29 @@ const eventPositions = computed(() => {
       </div>
     </div>
 
-     <!-- Event Bars -->
-  <div v-for="event in mockDates" :key="event._id">
-    <div v-if="calendarDays.find(d => isEventStartOnDate(event, d.date))">
-      <div
-        v-for="startDay in calendarDays.filter(d => isEventStartOnDate(event, d.date))"
-        :key="startDay.date.toString()"
-        class="absolute h-[18px] text-[10px] text-white rounded px-2 py-0.5 overflow-hidden whitespace-nowrap"
-        :style="{
-          backgroundColor: event.color || '#3b82f6',
-          top: `calc(${Math.floor(calendarDays.findIndex(d =>
-            d.date.isSame(startDay.date, 'day')
-          ) / 7) * (100 / 6)}% + 1.5rem + ${eventPositions[event._id] * 22}px)`,
-          left: `calc(${getEventOffsetInRow(startDay.date) * (100 / 7)}%)`,
-          width: `calc(${Math.min(getSpanDays(event), 7 - getEventOffsetInRow(startDay.date)) * (100 / 7)}%)`
-        }"
-      >
-        {{ event.title }}
-      </div>
+    <!-- Event Bars -->
+    <div v-for="event in mockDates" :key="event._id">
+      <template v-if="calendarDays.find(d => isEventStartOnDate(event, d.date))">
+        <template v-for="startDay in calendarDays.filter(d => isEventStartOnDate(event, d.date))" :key="startDay.date.toString()">
+          <div
+            v-if="eventPositions[event._id] < 3"
+            class="absolute h-[18px] text-[10px] text-white rounded px-2 py-0.5 overflow-hidden whitespace-nowrap text-ellipsis"
+            :style="{
+              backgroundColor: event.color || '#3b82f6',
+              top: `calc(${Math.floor(calendarDays.findIndex(d =>
+                d.date.isSame(startDay.date, 'day')
+              ) / 7) * (100 / 6)}% + 1.5rem + ${eventPositions[event._id] * 22}px)`,
+              left: `calc(${getEventOffsetInRow(startDay.date) * (100 / 7)}%)`,
+              width: `calc(${Math.min(getSpanDays(event), 7 - getEventOffsetInRow(startDay.date)) * (100 / 7)}%)`
+            }"
+            :title="event.title"
+          >
+            {{ event.title }}
+          </div>
+        </template>
+      </template>
     </div>
-  </div>
+
   </div>
 </div>
 
