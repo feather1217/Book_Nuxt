@@ -18,32 +18,33 @@
         </div>
       </div>
 
-      <div class="flex flex-1">
+      <!-- 時間區域容器 -->
+      <div class="flex flex-1 h-full overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
         <!-- 時間軸 -->
-        <div class="w-14 bg-base-100 border-r border-gray-200 select-none">
+        <div class="w-14   select-none flex-shrink-0">
           <div v-for="hour in 25" :key="hour" class="h-14 leading-[56px] text-xs text-gray-500 text-right pr-2">
             {{ hour - 1 < 10 ? '0' + (hour - 1) : hour - 1 }}:00
           </div>
         </div>
 
-        <!-- 事件容器 (有垂直滾動條) -->
-        <div
-          class="relative flex-1 overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100"
-        >
-          <!-- 時間格線 -->
-          <div v-for="hour in 25" :key="'line-' + hour" class="absolute left-0 right-0 border-t border-gray-200"
-            :style="{ top: (hour - 1) * 56 + 'px' }"
-          ></div>
+        <!-- 事件容器 -->
+        <div class="relative flex-1">
+          <div class="relative" style="min-height: calc(25 * 56px)">
+            <!-- 時間格線 -->
+            <div v-for="hour in 25" :key="'line-' + hour" class="absolute left-0 right-0 border-t border-gray-200"
+              :style="{ top: (hour - 1) * 56 + 'px' }">
+            </div>
 
-          <!-- 時間事件塊 -->
-          <div
-            v-for="event in timeEvents"
-            :key="event._id"
-            class="absolute left-2 right-2 text-white rounded-md px-2 py-1 shadow-md cursor-pointer hover:brightness-90 transition-all"
-            :style="{ ...getEventStyle(event), backgroundColor: event.color }"
-            :title="`${event.title} (${event.start} - ${event.end})`"
-          >
-            {{ event.title }}
+            <!-- 時間事件塊 -->
+            <div
+              v-for="event in timeEvents"
+              :key="event._id"
+              class="absolute left-2 right-2 text-white rounded-md px-2 py-1 shadow-md cursor-pointer hover:brightness-90 transition-all"
+              :style="{ ...getEventStyle(event), backgroundColor: event.color }"
+              :title="`${event.title} (${event.start} - ${event.end})`"
+            >
+              {{ event.title }}
+            </div>
           </div>
         </div>
       </div>
